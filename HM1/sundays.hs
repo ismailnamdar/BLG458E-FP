@@ -8,7 +8,6 @@ monthCalculate m
 dayOfWeek :: Integer -> Integer -> Integer -> Integer
 dayOfWeek y m d = (d + t1 + k + t2 + t3 + 5 * j) `mod` 7
     where
-        m = monthCalculate m
 
         j :: Integer
         j = y `div` 100
@@ -24,3 +23,15 @@ dayOfWeek y m d = (d + t1 + k + t2 + t3 + 5 * j) `mod` 7
 
         t3 :: Integer
         t3 = j `div` 4
+
+sundays1 :: Integer -> Integer -> Integer
+sundays1 start end = sundays' start 1
+    where
+        sundays' :: Integer -> Integer -> Integer
+        sundays' y m
+            | y > end = 0
+            | otherwise = if dayOfWeek y m 1 == 1 then rest + 1 else rest
+            where
+                nextY = if m > 12 then sundays' (y + 1) 1 else 0
+                nextM = if m > 12 then 0 else sundays' y (m + 1)
+                rest = nextY + nextM
