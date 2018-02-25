@@ -1,3 +1,8 @@
+--
+-- Ismail Salih Namdar 150140055
+-- 25.02.2018
+--
+
 import Prelude
 
 monthCalculate :: Integer -> Integer
@@ -35,3 +40,13 @@ sundays1 start end = sundays' start 1
                 nextY = if m > 12 then sundays' (y + 1) 1 else 0
                 nextM = if m > 12 then 0 else sundays' y (m + 1)
                 rest = nextY + nextM
+
+leap :: Integer -> Bool
+leap y = (y `mod` 4 == 0) && (y `mod` 100 /= 0) || (y `mod` 400 == 0)
+
+daysInMonth :: Integer -> Integer -> Integer
+daysInMonth m y
+    | m == 2 = if leap y then 29 else 28
+    | m == 4 || m == 6 || m == 9 || m == 11 = 30
+    | otherwise = 31
+
